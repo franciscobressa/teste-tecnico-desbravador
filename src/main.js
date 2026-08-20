@@ -2,13 +2,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './styles/main.css'
 
-const app = document.querySelector('#app')
+import { registerRoute, initRouter } from './router.js'
+import { renderSearchPage } from './pages/SearchPage.js'
+import { renderUserPage } from './pages/UserPage.js'
+import { renderRepoPage } from './pages/RepoPage.js'
+import { renderNotFoundPage } from './pages/NotFoundPage.js'
 
-app.innerHTML = `
-  <section class="home-placeholder">
-    <h1 class="display-5 fw-bold mb-3">GitHub Explorer</h1>
-    <p class="lead text-muted">
-      Busque repositórios populares de um usuário do GitHub.
-    </p>
-  </section>
-`
+registerRoute('/', renderSearchPage)
+registerRoute('/user/:username', renderUserPage)
+registerRoute('/repo/:owner/:name', renderRepoPage)
+registerRoute('*', renderNotFoundPage)
+
+initRouter()
