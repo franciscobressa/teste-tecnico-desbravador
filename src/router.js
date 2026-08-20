@@ -17,6 +17,11 @@ function pathToRegex(path) {
 }
 
 export function registerRoute(path, handler) {
+  if (path === '*') {
+    routes.push({ path, handler, isWildcard: true })
+    return
+  }
+
   const { regex, paramNames } = pathToRegex(path)
 
   routes.push({ path, handler, regex, paramNames })
@@ -24,6 +29,8 @@ export function registerRoute(path, handler) {
 
 function matchRoute(pathname) {
   for (const route of routes) {
+    if (route.isWildcard) continue
+
     const match = pathname.match(route.regex)
 
     if (!match) continue
@@ -58,7 +65,7 @@ export function handleRoute() {
     return
   }
 
-  const notFound = routes.find((route) => route.path === '*')
+  const notFound = routes.find((route) => route.isWildcard)
 
   if (notFound) {
     notFound.handler(app)

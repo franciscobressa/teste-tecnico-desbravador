@@ -12,3 +12,8 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+
+.search-form {
+  max-width: 480px;
+  margin: 0 auto;
+}
