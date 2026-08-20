@@ -4,9 +4,7 @@ Aplicação client-side para consultar a API do GitHub e exibir os repositórios
 
 ## Demo
 
-> Substitua pela URL após o deploy (Vercel, Netlify ou Surge).
-
-`https://seu-projeto.vercel.app`
+**https://teste-tecnico-desbravador.vercel.app**
 
 ## Tecnologias
 
@@ -46,52 +44,6 @@ npm run dev
 
 Acesse `http://localhost:5173`.
 
-## Build de produção
-
-```bash
-npm run build
-npm run preview
-```
-
-O build gera os arquivos estáticos na pasta `dist/`.
-
-## Deploy
-
-O projeto é uma SPA estática. Arquivos de configuração incluídos:
-
-| Plataforma | Arquivo |
-|---|---|
-| Vercel | `vercel.json` |
-| Netlify | `netlify.toml` e `public/_redirects` |
-
-### Vercel
-
-```bash
-npm install -g vercel
-vercel
-```
-
-### Netlify
-
-1. Conecte o repositório no painel da Netlify
-2. Build command: `npm run build`
-3. Publish directory: `dist`
-
-### Surge
-
-```bash
-npm run build
-npx surge dist
-```
-
-## APIs utilizadas
-
-- `GET https://api.github.com/users/{username}`
-- `GET https://api.github.com/users/{username}/repos`
-- `GET https://api.github.com/repos/{owner}/{name}`
-
-Documentação: https://docs.github.com/en/rest
-
 ## Decisões técnicas
 
 - **Vanilla JS + Vite**: atende o requisito de não usar frameworks pesados, com DX moderna via ES Modules.
@@ -124,4 +76,4 @@ src/
 - [x] Ordenação alterável
 - [x] Detalhes do repositório + link externo
 - [x] README com instalação e execução
-- [ ] Demo hospedada (adicionar URL após deploy)
+- [x] Demo hospedada
