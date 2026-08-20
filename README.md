@@ -8,11 +8,11 @@ Aplicação client-side para consultar a API do GitHub e exibir os repositórios
 
 ## Tecnologias
 
-- [Vite](https://vitejs.dev/) — build e dev server
-- JavaScript (ES Modules) — sem framework SPA
-- [Axios](https://axios-http.com/) — requisições HTTP
-- [Bootstrap 5](https://getbootstrap.com/) — layout responsivo
-- History API — roteamento client-side
+- [Vite](https://vitejs.dev/)
+- JavaScript (ES Modules)
+- [Axios](https://axios-http.com/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- History API
 
 ## Funcionalidades
 
@@ -43,14 +43,6 @@ npm run dev
 ```
 
 Acesse `http://localhost:5173`.
-
-## Decisões técnicas
-
-- **Vanilla JS + Vite**: atende o requisito de não usar frameworks pesados, com DX moderna via ES Modules.
-- **Router manual**: implementação leve com History API, sem dependências extras.
-- **Axios**: facilita tratamento de erros HTTP e configuração da base URL.
-- **Ordenação client-side**: evita novas requisições ao alterar o critério de sort.
-- **Paginação de repos**: busca todas as páginas (100 por request) para usuários com muitos repositórios.
 
 ## Estrutura do projeto
 
