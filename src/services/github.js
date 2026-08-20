@@ -1,58 +1,24 @@
 import axios from 'axios'
+import { MESSAGES } from '../constants.js'
 
-const githubApi = axios.create({
+const api = axios.create({
   baseURL: 'https://api.github.com',
-  headers: {
-    Accept: 'application/vnd.github+json',
-  },
 })
 
-export class GitHubApiError extends Error {
-  constructor(message, { status, type } = {}) {
-    super(message)
-    this.name = 'GitHubApiError'
-    this.status = status
-    this.type = type
-  }
-}
-
-function toGitHubApiError(error) {
-  if (error instanceof GitHubApiError) {
-    return error
+function getErrorMessage(error) {
+  if (error.response?.status === 404) {
+    return MESSAGES.notFound
   }
 
-  if (error.response) {
-    const { status } = error.response
-
-    if (status === 404) {
-      return new GitHubApiError('Recurso não encontrado.', {
-        status,
-        type: 'not_found',
-      })
-    }
-
-    if (status === 403) {
-      return new GitHubApiError(
-        'Limite de requisições excedido. Tente novamente em instantes.',
-        { status, type: 'rate_limit' },
-      )
-    }
-
-    return new GitHubApiError('Erro ao comunicar com a API do GitHub.', {
-      status,
-      type: 'unknown',
-    })
+  if (error.response?.status === 403) {
+    return MESSAGES.rateLimit
   }
 
   if (error.request) {
-    return new GitHubApiError('Não foi possível conectar à API do GitHub.', {
-      type: 'network',
-    })
+    return MESSAGES.network
   }
 
-  return new GitHubApiError('Erro inesperado ao processar a requisição.', {
-    type: 'unknown',
-  })
+  return 'Erro ao comunicar com a API do GitHub.'
 }
 
 async function request(requestFn) {
@@ -60,31 +26,37 @@ async function request(requestFn) {
     const { data } = await requestFn()
     return data
   } catch (error) {
-    throw toGitHubApiError(error)
+    throw new Error(getErrorMessage(error))
   }
 }
 
 export function getUser(username) {
-  return request(() =>
-    githubApi.get(`/users/${encodeURIComponent(username)}`),
-  )
+  return request(() => api.get(`/users/${username}`))
 }
 
-export function getUserRepos(username) {
-  return request(() =>
-    githubApi.get(`/users/${encodeURIComponent(username)}/repos`, {
-      params: {
-        per_page: 100,
-        sort: 'updated',
-      },
-    }),
-  )
+export async function getUserRepos(username) {
+  let page = 1
+  let repos = []
+
+  while (true) {
+    const data = await request(() =>
+      api.get(`/users/${username}/repos`, {
+        params: { per_page: 100, page },
+      }),
+    )
+
+    repos = repos.concat(data)
+
+    if (data.length < 100) {
+      break
+    }
+
+    page += 1
+  }
+
+  return repos
 }
 
 export function getRepo(owner, name) {
-  return request(() =>
-    githubApi.get(
-      `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}`,
-    ),
-  )
+  return request(() => api.get(`/repos/${owner}/${name}`))
 }

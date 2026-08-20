@@ -12,10 +12,16 @@ export async function renderUserPage(app, { username }) {
   showLoading(app, MESSAGES.loadUser)
 
   try {
-    const [user, repos] = await Promise.all([
-      getUser(username),
-      getUserRepos(username),
-    ])
+    const user = await getUser(username)
+
+    let repos = []
+    let reposWarning = null
+
+    try {
+      repos = await getUserRepos(username)
+    } catch (error) {
+      reposWarning = error.message || MESSAGES.reposError
+    }
 
     let currentSort = DEFAULT_SORT
 
@@ -34,14 +40,23 @@ export async function renderUserPage(app, { username }) {
             <h2 class="h4 mb-0">Repositórios (${repos.length})</h2>
             <div id="sort-select"></div>
           </div>
+          ${reposWarning ? `<div id="repos-warning" class="mb-3"></div>` : ''}
           <div id="repo-list"></div>
         </section>
       `
 
-      renderSortSelect(app.querySelector('#sort-select'), currentSort, (sortBy) => {
-        currentSort = sortBy
-        renderRepos()
-      })
+      if (reposWarning) {
+        showError(app.querySelector('#repos-warning'), reposWarning)
+      }
+
+      if (repos.length) {
+        renderSortSelect(app.querySelector('#sort-select'), currentSort, (sortBy) => {
+          currentSort = sortBy
+          renderRepos()
+        })
+      } else {
+        app.querySelector('#sort-select').innerHTML = ''
+      }
 
       renderRepos()
     }

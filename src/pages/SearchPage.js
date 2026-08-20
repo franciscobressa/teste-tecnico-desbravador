@@ -19,7 +19,9 @@ export function renderSearchPage(app) {
             autocomplete="off"
             required
           />
-          <button type="submit" class="btn btn-primary px-4">Buscar</button>
+          <button id="search-button" type="submit" class="btn btn-primary px-4">
+            Buscar
+          </button>
         </div>
       </form>
 
@@ -29,6 +31,7 @@ export function renderSearchPage(app) {
 
   const form = app.querySelector('#search-form')
   const input = app.querySelector('#username-input')
+  const button = app.querySelector('#search-button')
   const feedback = app.querySelector('#search-feedback')
 
   form.addEventListener('submit', (event) => {
@@ -43,6 +46,10 @@ export function renderSearchPage(app) {
       `
       return
     }
+
+    button.disabled = true
+    button.textContent = MESSAGES.searching
+    input.disabled = true
 
     navigate(`/user/${encodeURIComponent(username)}`)
   })

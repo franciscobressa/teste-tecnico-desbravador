@@ -1,14 +1,15 @@
 import { FALLBACKS } from '../constants.js'
-import { fallback } from '../utils/format.js'
+import { escapeHtml, fallback } from '../utils/format.js'
 
 export function renderRepoDetail(repo) {
-  const description = fallback(repo.description, FALLBACKS.description)
-  const language = fallback(repo.language, FALLBACKS.language)
+  const fullName = escapeHtml(repo.full_name)
+  const description = escapeHtml(fallback(repo.description, FALLBACKS.description))
+  const language = escapeHtml(fallback(repo.language, FALLBACKS.language))
 
   return `
     <article class="card shadow-sm">
       <div class="card-body">
-        <h1 class="h3 mb-2">${repo.full_name}</h1>
+        <h1 class="h3 mb-2">${fullName}</h1>
         <p class="text-muted mb-4">${description}</p>
 
         <dl class="row mb-4">

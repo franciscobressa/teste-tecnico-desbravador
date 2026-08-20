@@ -19,8 +19,13 @@ export const FALLBACKS = {
 export const MESSAGES = {
   loadUser: 'Carregando perfil...',
   loadRepo: 'Carregando repositório...',
+  searching: 'Buscando...',
   userError: 'Não foi possível carregar o usuário.',
   repoError: 'Não foi possível carregar o repositório.',
+  reposError: 'Não foi possível carregar os repositórios.',
   emptyUsername: 'Digite um username.',
   noRepos: 'Nenhum repositório encontrado.',
+  rateLimit: 'Limite de requisições do GitHub atingido. Aguarde um momento.',
+  notFound: 'Recurso não encontrado.',
+  network: 'Não foi possível conectar à API do GitHub.',
 }
