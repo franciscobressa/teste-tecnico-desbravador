@@ -1,8 +1,9 @@
 import { navigate } from '../router.js'
+import { MESSAGES } from '../constants.js'
 
 export function renderSearchPage(app) {
   app.innerHTML = `
-    <section class="home-placeholder">
+    <section class="home-placeholder page-section">
       <h1 class="display-5 fw-bold mb-3">GitHub Explorer</h1>
       <p class="lead text-muted mb-4">
         Busque repositórios populares de um usuário do GitHub.
@@ -18,7 +19,7 @@ export function renderSearchPage(app) {
             autocomplete="off"
             required
           />
-          <button type="submit" class="btn btn-primary">Buscar</button>
+          <button type="submit" class="btn btn-primary px-4">Buscar</button>
         </div>
       </form>
 
@@ -37,8 +38,9 @@ export function renderSearchPage(app) {
     const username = input.value.trim()
 
     if (!username) {
-      feedback.innerHTML =
-        '<div class="alert alert-warning mb-0">Digite um username.</div>'
+      feedback.innerHTML = `
+        <div class="alert alert-warning mb-0">${MESSAGES.emptyUsername}</div>
+      `
       return
     }
 

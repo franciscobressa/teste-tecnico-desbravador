@@ -1,13 +1,6 @@
-export const SORT_OPTIONS = [
-  { value: 'stars-desc', label: 'Estrelas (maior)' },
-  { value: 'stars-asc', label: 'Estrelas (menor)' },
-  { value: 'name-asc', label: 'Nome (A-Z)' },
-  { value: 'name-desc', label: 'Nome (Z-A)' },
-  { value: 'updated-desc', label: 'Atualizado (recente)' },
-  { value: 'updated-asc', label: 'Atualizado (antigo)' },
-]
+import { DEFAULT_SORT } from '../constants.js'
 
-export function sortRepos(repos, sortBy = 'stars-desc') {
+export function sortRepos(repos, sortBy = DEFAULT_SORT) {
   const list = [...repos]
 
   switch (sortBy) {

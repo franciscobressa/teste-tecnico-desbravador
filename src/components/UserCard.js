@@ -1,15 +1,18 @@
+import { FALLBACKS } from '../constants.js'
+import { fallback } from '../utils/format.js'
+
 export function renderUserCard(user) {
-  const bio = user.bio || 'Sem biografia'
-  const email = user.email || 'Não informado'
+  const bio = fallback(user.bio, FALLBACKS.bio)
+  const email = fallback(user.email, FALLBACKS.email)
 
   return `
-    <div class="card shadow-sm">
+    <article class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-3 mb-4">
           <img
             src="${user.avatar_url}"
             alt="Avatar de ${user.login}"
-            class="rounded-circle"
+            class="rounded-circle user-avatar"
             width="96"
             height="96"
           />
@@ -20,16 +23,16 @@ export function renderUserCard(user) {
         </div>
 
         <dl class="row mb-0">
-          <dt class="col-sm-4">Seguidores</dt>
-          <dd class="col-sm-8">${user.followers}</dd>
+          <dt class="col-sm-4 col-md-3">Seguidores</dt>
+          <dd class="col-sm-8 col-md-9">${user.followers}</dd>
 
-          <dt class="col-sm-4">Seguindo</dt>
-          <dd class="col-sm-8">${user.following}</dd>
+          <dt class="col-sm-4 col-md-3">Seguindo</dt>
+          <dd class="col-sm-8 col-md-9">${user.following}</dd>
 
-          <dt class="col-sm-4">E-mail</dt>
-          <dd class="col-sm-8">${email}</dd>
+          <dt class="col-sm-4 col-md-3">E-mail</dt>
+          <dd class="col-sm-8 col-md-9">${email}</dd>
         </dl>
       </div>
-    </div>
+    </article>
   `
 }

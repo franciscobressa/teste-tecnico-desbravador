@@ -7,9 +7,17 @@ body {
   min-height: calc(100vh - 56px);
 }
 
+.navbar {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+}
+
+.page-section {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 .home-placeholder {
   max-width: 640px;
-  margin: 0 auto;
   text-align: center;
 }
 
@@ -18,14 +26,31 @@ body {
   margin: 0 auto;
 }
 
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.user-avatar {
+  object-fit: cover;
+}
+
 .repo-card {
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .repo-card:hover {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .sort-select {
   min-width: 200px;
+}
+
+@media (max-width: 575.98px) {
+  .sort-select {
+    width: 100%;
+    min-width: 0;
+  }
 }

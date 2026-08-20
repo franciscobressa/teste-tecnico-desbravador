@@ -1,6 +1,6 @@
-import { SORT_OPTIONS } from '../utils/sortRepos.js'
+import { DEFAULT_SORT, SORT_OPTIONS } from '../constants.js'
 
-export function renderSortSelect(container, selected, onChange) {
+export function renderSortSelect(container, selected = DEFAULT_SORT, onChange) {
   const options = SORT_OPTIONS.map(
     (option) =>
       `<option value="${option.value}" ${option.value === selected ? 'selected' : ''}>

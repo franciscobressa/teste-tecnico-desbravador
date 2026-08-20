@@ -1,9 +1,13 @@
+import { MESSAGES } from '../constants.js'
 import { renderRepoCard } from './RepoCard.js'
 
 export function renderRepoList(container, repos) {
   if (!repos.length) {
-    container.innerHTML =
-      '<p class="text-muted mb-0">Nenhum repositório encontrado.</p>'
+    container.innerHTML = `
+      <div class="empty-state">
+        <p class="text-muted mb-0">${MESSAGES.noRepos}</p>
+      </div>
+    `
     return
   }
 
